@@ -1,4 +1,13 @@
 package com.logBook.LogbookBackend.model;
 
-public record Log(double amount, LogType logType, String date) implements LogInterface {
-}
+import jakarta.persistence.*;
+
+  @Entity
+  @Table
+  public record Log(@Id @GeneratedValue(
+          strategy = GenerationType.IDENTITY) Long id,
+                    double amount, LogType logType, String date) implements LogInterface{
+
+
+
+  }
