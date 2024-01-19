@@ -22,6 +22,9 @@ public class Log implements LogInterface {
     this.logType = logType;
     this.date = date;
   }
+  public Log() {
+    // default constructor
+  }
 
   // implementation of interfaces starts here.
   @Override
@@ -30,10 +33,10 @@ public class Log implements LogInterface {
   }
 
   @Override
-  public boolean logHasValue (Log log) {
-    return log.amount >= 1.0;
+  public boolean logHasValue(Log log) {
+    return log.amount >= 1.0 && log.date != null;
   }
-  
+
   public Long getID() {
     return ID;
   }
