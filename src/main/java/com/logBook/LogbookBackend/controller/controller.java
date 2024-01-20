@@ -4,10 +4,9 @@ package com.logBook.LogbookBackend.controller;
 import com.logBook.LogbookBackend.model.Log;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5500/")
 @RestController
 @RequestMapping()
 public class controller {

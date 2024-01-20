@@ -31,17 +31,19 @@ public class BusinessLogic {
   }
 
   public boolean addBuyLog(Log log) {
-    if(log.validateLog(log) && log.logHasValue(log)){
-     // var newLog = new Log(log.getAmount(), LogType.BUY, "839383");
-      logRepository.save(log);
+    if(log.validateLog(log) && log.logHasValue(log)
+            && log.getDate().equalsIgnoreCase(String.valueOf(LogType.BUY))){
+      var newLog = new Log(log.getAmount(), log.getLogType(), log.getDate());
+      logRepository.save(newLog);
       return true;
     }
     return false;
   }
 
   public boolean addSellLog(Log log) {
-    if(log.validateLog(log) && log.logHasValue(log)){
-      var newLog = new Log(log.getAmount(), LogType.SALE, "839383");
+    if(log.validateLog(log) && log.logHasValue(log)
+            && log.getDate().equalsIgnoreCase(String.valueOf(LogType.SALE))){
+      var newLog = new Log(log.getAmount(), log.getLogType(), log.getDate());
       logRepository.save(newLog);
       return true;
     }

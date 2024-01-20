@@ -34,7 +34,7 @@ public class Log implements LogInterface {
 
   @Override
   public boolean logHasValue(Log log) {
-    return log.amount >= 1.0 && log.date != null;
+    return log.amount >= 1.0 && log.date != null && log.logType != null;
   }
 
   public Long getID() {
