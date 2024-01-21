@@ -18,13 +18,13 @@ public class BusinessLogic {
     this.logRepository = logRepository;
   }
 
-  @PostConstruct
-  public void add() {
-    var scop = new Log( 50.4, LogType.BUY, "49909");
-    var scop1 = new Log( 50.4, LogType.SALE, "49909");
-    logRepository.save(scop);
-    logRepository.save(scop1);
-  }
+//  @PostConstruct
+//  public void add() {
+//    var scop = new Log( 50.4, LogType.BUY, "49909", "02:98AM");
+//    var scop1 = new Log( 50.4, LogType.SALE, "49909", "02:54PM");
+//    logRepository.save(scop);
+//    logRepository.save(scop1);
+//  }
 
   public ArrayList<Log> getLogHistory() {
     return (ArrayList<Log>) logRepository.findAll();
@@ -32,8 +32,8 @@ public class BusinessLogic {
 
   public boolean addBuyLog(Log log) {
     if(log.validateLog(log) && log.logHasValue(log)
-            && log.getDate().equalsIgnoreCase(String.valueOf(LogType.BUY))){
-      var newLog = new Log(log.getAmount(), log.getLogType(), log.getDate());
+            && log.getLogType().equals(LogType.BUY)){
+      var newLog = new Log(log.getAmount(), log.getLogType(), log.getDate(), log.getTime());
       logRepository.save(newLog);
       return true;
     }
@@ -42,8 +42,8 @@ public class BusinessLogic {
 
   public boolean addSellLog(Log log) {
     if(log.validateLog(log) && log.logHasValue(log)
-            && log.getDate().equalsIgnoreCase(String.valueOf(LogType.SALE))){
-      var newLog = new Log(log.getAmount(), log.getLogType(), log.getDate());
+            && log.getLogType().equals(LogType.SALE)){
+      var newLog = new Log(log.getAmount(), log.getLogType(), log.getDate(), log.getTime());
       logRepository.save(newLog);
       return true;
     }

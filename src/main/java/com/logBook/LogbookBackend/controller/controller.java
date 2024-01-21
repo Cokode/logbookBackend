@@ -18,7 +18,6 @@ public class controller {
 
   @GetMapping("/get")
   public ArrayList<Log> getIt() {
-    System.out.println("Hey it is working");
     return businessLogic.getLogHistory();
   }
 
@@ -26,20 +25,23 @@ public class controller {
   @PostMapping("/log-record-sell")
   public void postSaleLog(@RequestBody Log log) {
     if(businessLogic.addSellLog(log)) {
-      System.out.println("succeeded");// code goes here Todo
+      System.out.println("sell record succeeded");
+      return;// code goes here Todo
     }
     // code goes here
-    System.out.println("did not succeed");
+    System.out.println("sell record did not succeed");
 
   }
 
+  @ResponseStatus
   @PostMapping("/log-record-buy")
   public void postBuyLog(@RequestBody Log log) {
     if (businessLogic.addBuyLog(log)) {
       // code goes here Todo
-      System.out.println("succeeded");
+      System.out.println("buy record succeeded");
+      return;
     }
     // code goes here Todo
-    System.out.println("did not succeed");
+    System.out.println("buy record did not succeed");
   }
 }

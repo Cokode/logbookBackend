@@ -16,11 +16,13 @@ public class Log implements LogInterface {
   private double amount;
   private LogType logType;
   private String date;
+  private String time;
 
-  public Log( double amount, LogType logType, String date) {
+  public Log( double amount, LogType logType, String date, String time) {
     this.amount = amount;
     this.logType = logType;
     this.date = date;
+    this.time = time;
   }
   public Log() {
     // default constructor
@@ -34,7 +36,10 @@ public class Log implements LogInterface {
 
   @Override
   public boolean logHasValue(Log log) {
-    return log.amount >= 1.0 && log.date != null && log.logType != null;
+    return log.amount >= 1.0 && log
+            .date != null && log
+            .logType != null && log
+            .time != null;
   }
 
   public Long getID() {
@@ -51,5 +56,9 @@ public class Log implements LogInterface {
 
   public String getDate() {
     return date;
+  }
+
+  public String getTime() {
+    return time;
   }
 }
