@@ -6,6 +6,6 @@
 
   @Repository
   public interface LogRepository extends CrudRepository<Log, Long> {
-
-
+    @Override
+    Iterable<Log> findAllById(Iterable<Long> longs);
   }
