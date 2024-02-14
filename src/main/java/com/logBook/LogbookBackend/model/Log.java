@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Log implements LogInterface {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long ID;
+  private long id;
   private double amount;
   private LogType logType;
   private String date;
@@ -14,14 +14,14 @@ public class Log implements LogInterface {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  private User user;
+  private LogUser logUser;
 
-  public Log(double amount, LogType logType, String date, String time, User user) {
+  public Log(double amount, LogType logType, String date, String time, LogUser logUser) {
     this.amount = amount;
     this.logType = logType;
     this.date = date;
     this.time = time;
-    this.user = user;
+    this.logUser = logUser;
   }
 
   public Log() {
@@ -44,12 +44,12 @@ public class Log implements LogInterface {
     return time;
   }
 
-  public User getUser() {
-    return user;
+  public LogUser getUser() {
+    return logUser;
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public void setUser(LogUser logUser) {
+    this.logUser = logUser;
   }
 
   // implementation of interfaces starts here.

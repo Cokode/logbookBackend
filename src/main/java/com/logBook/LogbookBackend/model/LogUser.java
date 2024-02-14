@@ -1,9 +1,8 @@
 package com.logBook.LogbookBackend.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.format.annotation.NumberFormat;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,41 +10,41 @@ import java.util.List;
 
 @Entity
 @Table
-public class User {
+public class LogUser {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+  @NotNull @NotBlank
   private String userName;
-
+  @NotNull @NotBlank
   private String FirstName;
   private String MiddleName;
-
+  @NotNull @NotBlank
   private String LastName;
-
+  @NotNull @NotBlank
   private String email;
-
+  @NotNull @NotBlank
   private String phoneNumber;
-
+  @NotNull @NotBlank
   private String password;
 
-
+  @NotNull @NotBlank
   private LocalDate dateOfBirth;
 
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "fk_user_id", referencedColumnName = "id")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "logUser")
   private List<Log> logs;
 
-  public User() {
+  public LogUser() {
   }
 
-  public User(String userName,
-              String firstName,
-              String middleName,
-              String lastName,
-              String email,
-              String phoneNumber,
-              String password,
-              LocalDate dateOfBirth) {
+  public LogUser(String userName,
+                 String firstName,
+                 String middleName,
+                 String lastName,
+                 String email,
+                 String phoneNumber,
+                 String password,
+                 LocalDate dateOfBirth) {
     this.userName = userName;
     FirstName = firstName;
     MiddleName = middleName;
