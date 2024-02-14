@@ -1,14 +1,14 @@
 package com.logBook.LogbookBackend.respository;
 
-import com.logBook.LogbookBackend.model.User;
+import com.logBook.LogbookBackend.model.LogUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-  User findUserByID(Long ID);
+public interface UserRepository extends JpaRepository<LogUser, Long> {
+  LogUser findUserById(Long id);
 
-  User findUserByUserName(String userName);
-  User findUserByEmail(String UserEmail);
+  LogUser findUserByUserName(String userName);
+  LogUser findUserByEmail(String UserEmail);
 }
 
