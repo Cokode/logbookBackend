@@ -1,11 +1,12 @@
 package com.logBook.LogbookBackend.BusinessLogic;
 
-import com.logBook.LogbookBackend.model.User;
+import com.logBook.LogbookBackend.model.LogUser;
 import com.logBook.LogbookBackend.respository.UserRepository;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Service
 public class UserService {
@@ -16,29 +17,29 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public boolean createUser (@NotNull User newUser) {
-    User user;
+  public LogUser createUser (@NotNull LogUser newLogUser) {
+    LogUser logUser;
     if (userRepository.findUserByUserName(
-            newUser.getUserName()) == null
-      && userRepository.findUserByEmail(newUser.getEmail()) == null) {
+            newLogUser.getUserName()) == null
+      && userRepository.findUserByEmail(newLogUser.getEmail()) == null) {
 
-      user = newUser;
-      userRepository.save(user);
-      return true;
+      logUser = newLogUser;
+      userRepository.save(logUser);
+      return logUser;
     }
-    return false;
+    return null;
   }
 
   public boolean updateUserName (@NotBlank String newUserName, @NotBlank String email) {
-    User user = userRepository.findUserByEmail(email);
-    user.setUserName(newUserName);
+    LogUser logUser = userRepository.findUserByEmail(email);
+    logUser.setUserName(newUserName);
 
     return true;
   }
 
   public boolean updateUserPhoneNumber (@NotBlank String newPhoneNumber, @NotBlank String email) {
-    User user = userRepository.findUserByEmail(email);
-    user.setPhoneNumber(newPhoneNumber);
+    LogUser logUser = userRepository.findUserByEmail(email);
+    logUser.setPhoneNumber(newPhoneNumber);
 
     return true;
   }

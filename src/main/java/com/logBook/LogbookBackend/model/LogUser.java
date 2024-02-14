@@ -3,7 +3,6 @@ package com.logBook.LogbookBackend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.time.LocalDate;
@@ -14,31 +13,26 @@ import java.util.List;
 @Table
 public class User {
   @Id
-  @SequenceGenerator(
-          name = "student_sequence",
-          sequenceName = "student_sequence",
-          allocationSize = 1
-  )
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long ID;
+  private long id;
   private String userName;
-  @NotBlank
+
   private String FirstName;
   private String MiddleName;
-  @NotBlank
+
   private String LastName;
-  @Email @NotBlank
+
   private String email;
-  @NumberFormat @NotBlank
+
   private String phoneNumber;
 
-  @NotBlank
   private String password;
 
-  @NotBlank
+
   private LocalDate dateOfBirth;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "fk_user_id", referencedColumnName = "id")
   private List<Log> logs;
 
   public User() {
@@ -63,12 +57,12 @@ public class User {
     this.logs = new ArrayList<>(1000);
   }
 
-  public Long getID() {
-    return ID;
+  public Long getId() {
+    return id;
   }
 
-  public void setID(Long ID) {
-    this.ID = ID;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getUserName() {
