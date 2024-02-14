@@ -1,19 +1,44 @@
 package com.logBook.LogbookBackend.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.NumberFormat;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table
 public class User {
+  @Id
+  @SequenceGenerator(
+          name = "student_sequence",
+          sequenceName = "student_sequence",
+          allocationSize = 1
+  )
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long ID;
   private String userName;
+  @NotBlank
   private String FirstName;
   private String MiddleName;
+  @NotBlank
   private String LastName;
+  @Email @NotBlank
   private String email;
+  @NumberFormat @NotBlank
   private String phoneNumber;
+
+  @NotBlank
   private String password;
+
+  @NotBlank
   private LocalDate dateOfBirth;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Log> logs;
 
   public User() {
@@ -35,7 +60,7 @@ public class User {
     this.phoneNumber = phoneNumber;
     this.password = password;
     this.dateOfBirth = dateOfBirth;
-    this.logs = new ArrayList<>();
+    this.logs = new ArrayList<>(1000);
   }
 
   public Long getID() {
@@ -110,7 +135,7 @@ public class User {
     this.dateOfBirth = dateOfBirth;
   }
 
-  public Log getLog() {
-    return (Log) logs;
+  public List<Log> getLog() {
+    return logs;
   }
 }

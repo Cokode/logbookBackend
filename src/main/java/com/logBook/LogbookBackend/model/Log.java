@@ -3,14 +3,8 @@ package com.logBook.LogbookBackend.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table
 public class Log implements LogInterface {
   @Id
-  @SequenceGenerator(
-          name = "student_sequence",
-          sequenceName = "student_sequence",
-          allocationSize = 1
-  )
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long ID;
   private double amount;
@@ -18,32 +12,20 @@ public class Log implements LogInterface {
   private String date;
   private String time;
 
-  public Log( double amount, LogType logType, String date, String time) {
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  public Log(double amount, LogType logType, String date, String time, User user) {
     this.amount = amount;
     this.logType = logType;
     this.date = date;
     this.time = time;
+    this.user = user;
   }
+
   public Log() {
     // default constructor
-  }
-
-  // implementation of interfaces starts here.
-  @Override
-  public boolean validateLog(Log log) {
-    return log != null;
-  }
-
-  @Override
-  public boolean logHasValue(Log log) {
-    return log.amount >= 1.0 && log
-            .date != null && log
-            .logType != null && log
-            .time != null;
-  }
-
-  public Long getID() {
-    return ID;
   }
 
   public double getAmount() {
@@ -61,4 +43,24 @@ public class Log implements LogInterface {
   public String getTime() {
     return time;
   }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  // implementation of interfaces starts here.
+  @Override
+  public boolean validateLog(Log log) {
+    return false;
+  }
+
+  @Override
+  public boolean logHasValue(Log log) {
+    return false;
+  }
+
 }
