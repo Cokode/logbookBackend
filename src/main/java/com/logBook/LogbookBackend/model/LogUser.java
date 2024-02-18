@@ -14,27 +14,28 @@ public class LogUser {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-  @NotNull @NotBlank
+  @NotNull
   private String userName;
   @NotNull @NotBlank
   private String FirstName;
   private String MiddleName;
-  @NotNull @NotBlank
+  @NotNull
   private String LastName;
-  @NotNull @NotBlank
+  @NotNull
   private String email;
-  @NotNull @NotBlank
+  @NotNull
   private String phoneNumber;
-  @NotNull @NotBlank
+  @NotNull
   private String password;
 
-  @NotNull @NotBlank
-  private LocalDate dateOfBirth;
+  @NotNull
+  private String dateOfBirth;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "logUser")
   private List<Log> logs;
 
   public LogUser() {
+    this.logs = new ArrayList<>(1000);
   }
 
   public LogUser(String userName,
@@ -44,7 +45,7 @@ public class LogUser {
                  String email,
                  String phoneNumber,
                  String password,
-                 LocalDate dateOfBirth) {
+                 String dateOfBirth) {
     this.userName = userName;
     FirstName = firstName;
     MiddleName = middleName;
@@ -120,15 +121,20 @@ public class LogUser {
     this.password = password;
   }
 
-  public LocalDate getDateOfBirth() {
+  public String getDateOfBirth() {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(LocalDate dateOfBirth) {
+  public void setDateOfBirth(String dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 
   public List<Log> getLog() {
     return logs;
+  }
+
+  public void addToLogs(Log log) {
+    assert log != null;
+    this.logs.add(log);
   }
 }
