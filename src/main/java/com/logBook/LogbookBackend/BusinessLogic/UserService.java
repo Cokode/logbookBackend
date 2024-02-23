@@ -1,8 +1,6 @@
 package com.logBook.LogbookBackend.BusinessLogic;
 
-import com.logBook.LogbookBackend.model.Log;
-import com.logBook.LogbookBackend.model.LogUser;
-import com.logBook.LogbookBackend.model.LoginDetails;
+import com.logBook.LogbookBackend.model.*;
 import com.logBook.LogbookBackend.respository.UserRepository;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Optional.ofNullable;
 
 @Service
 public class UserService {
@@ -97,16 +94,6 @@ public class UserService {
     return userRepository.findUserByPhoneNumber(phoneNumber) == null;
   }
 
-  public boolean updateUserName (@NotBlank String newUserName, @NotBlank String email) {
-    userRepository.findUserByEmail(email).setUserName(newUserName);
-    return true;
-  }
-
-  public boolean updateUserPhoneNumber (@NotBlank String newPhoneNumber, @NotBlank String email) {
-    userRepository.findUserByEmail(email).setPhoneNumber(newPhoneNumber);
-    return true;
-  }
-
   public boolean verifyUserLogin(LoginDetails loginDetails) {
     String email = loginDetails.email();
     String password = loginDetails.password();
@@ -133,6 +120,68 @@ public class UserService {
     List<Log> logs = (userRepository.findUserByEmail("fuckyou@yahoo.com").getLog());
     System.out.println(logs.size());
     return Optional.of(userRepository.findUserByEmail("fuckyou@yahoo.com").getLog());
+  }
+
+  public boolean updateUserInformation(LogUpdateBody logUpdateBody, String type) {
+    assert logUpdateBody != null && !type.isEmpty();
+
+    String value = logUpdateBody.data();
+    String userName = logUpdateBody.UserName();
+
+    return switch (type) {
+      case "email" -> executeUpdate(1, value, userName);
+
+      case "username" -> executeUpdate(2,value, userName);
+
+      case "firstName" -> executeUpdate(3, value, userName);
+
+      case "middleName" -> executeUpdate(4,value, userName);
+
+      case "lastName" -> executeUpdate(5, value, userName);
+
+      case "password" -> executeUpdate(6,value, userName);
+
+      case "phoneNumber" -> executeUpdate(7,value, userName);
+
+      case "dateOfBirth" -> executeUpdate(8, value, userName);
+    };
+  }
+
+  public boolean executeUpdate(int index, String value, String userName) {
+
+    if(userRepository.findUserByUserName(userName) == null) {
+      return false;
+    }
+
+    switch (index) {
+      case 1 -> {
+        userRepository.findUserByUserName(userName).setEmail(value);
+      }
+      case 2 -> {
+        userRepository.findUserByUserName(userName).setUserName(value);
+      }
+      case 3 -> {
+        userRepository.findUserByUserName(userName).setFirstName(value);
+      }
+
+      case 4 -> {
+        userRepository.findUserByUserName(userName).setMiddleName(value);
+      }
+      case 5 -> {
+        userRepository.findUserByUserName(userName).setLastName(value);
+      }
+      case 6 -> {
+        userRepository.findUserByUserName(userName).setPassword(value);
+      }
+      case 7 -> {
+        userRepository.findUserByUserName(userName).setPhoneNumber(value);
+      }
+      case 8 -> {
+        userRepository.findUserByUserName(userName).setDateOfBirth(value);
+      }
+    }
+
+    return false;
   }
 
 //  @PostConstruct
