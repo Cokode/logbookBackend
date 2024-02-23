@@ -1,18 +1,18 @@
 package com.logBook.LogbookBackend.BusinessLogic;
 
 import com.logBook.LogbookBackend.model.Log;
-import com.logBook.LogbookBackend.model.LogType;
 import com.logBook.LogbookBackend.model.LogUser;
 import com.logBook.LogbookBackend.model.LoginDetails;
 import com.logBook.LogbookBackend.respository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 @Service
 public class UserService {
@@ -114,12 +114,12 @@ public class UserService {
     LogUser logUser = userRepository.findUserByEmail(email);
     LogUser logUser1 = userRepository.findUserByPhoneNumber(email);
 
-    logUser = logUser == null ? logUser1 : logUser;
+    logUser = (logUser == null ? logUser1 : logUser);
 
     if (logUser != null) {
       return logUser.getPassword().equals(password)
-              && (logUser.getEmail().equals(email)
-              ||  logUser.getPhoneNumber().equals(email));
+              && ( (logUser.getEmail().equals(email)
+              || logUser.getPhoneNumber().equals(email)) );
     }
     return false;
   }
@@ -127,4 +127,18 @@ public class UserService {
   public List<LogUser> getAll() {
     return userRepository.findAll();
   }
+
+  public Optional<List<Log>> addLog(Log log) {
+    userRepository.findUserByEmail("fuckyou@yahoo.com").addToLogs(log);
+    List<Log> logs = (userRepository.findUserByEmail("fuckyou@yahoo.com").getLog());
+    System.out.println(logs.size());
+    return Optional.of(userRepository.findUserByEmail("fuckyou@yahoo.com").getLog());
+  }
+
+//  @PostConstruct
+//  public void addLog () {
+//    Log log = new Log(45.3, LogType.BUY, "784939", "8393");
+//    System.out.println(log);
+//    userRepository.findUserById(1L).getLog().add(log);
+//  }
 }
