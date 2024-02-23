@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -31,7 +32,7 @@ public class LogUser {
   @NotNull
   private String dateOfBirth;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "logUser")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "logUser", fetch = FetchType.EAGER)
   private List<Log> logs;
 
   public LogUser() {
@@ -135,6 +136,12 @@ public class LogUser {
 
   public void addToLogs(Log log) {
     assert log != null;
-    this.logs.add(log);
+
+    List<Log> logs2 = new ArrayList<>(1000);
+    if (this.logs != null) {
+      logs2.addAll(this.logs);
+      logs2.add(log);
+      this.logs = logs2;
+    }
   }
 }

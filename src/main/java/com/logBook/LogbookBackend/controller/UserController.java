@@ -1,6 +1,7 @@
 package com.logBook.LogbookBackend.controller;
 
 import com.logBook.LogbookBackend.BusinessLogic.UserService;
+import com.logBook.LogbookBackend.model.Log;
 import com.logBook.LogbookBackend.model.LogUser;
 import com.logBook.LogbookBackend.model.LoginDetails;
 import jakarta.validation.constraints.NotNull;
@@ -35,11 +36,6 @@ public class UserController {
     throw new ResponseStatusException(HttpStatusCode.valueOf(201));
   }
 
-  @GetMapping("/getall")
-  public List<LogUser> allOf() {
-    return userService.getAll();
-  }
-
   @GetMapping("/verifyUserName")
   public ResponseEntity<HttpStatus> verifyUserName (@RequestParam("userName") String userName) {
     if(!userService.verifyUserName(userName)) {
@@ -55,12 +51,16 @@ public class UserController {
       // field before sending object to client side.
   @PostMapping("/verifyLogin")
   public Optional<LogUser> verifyLogin (@RequestBody @NotNull LoginDetails loginInfo) {
-
-    if (userService.verifyUserLogin(loginInfo)) {
-      System.out.println(ResponseEntity.ok().build());
-      return Optional.ofNullable(userService.getUser(loginInfo));
-    }
-
     return Optional.ofNullable(userService.getUser(loginInfo));
+  }
+
+  @GetMapping("/getall")
+  public List<LogUser> allOf() {
+    return userService.getAll();
+  }
+
+  @PostMapping("/gg")
+  public Optional<List<Log>> addLog(@NotNull @RequestBody Log log) {
+    return userService.addLog(log);
   }
 }
