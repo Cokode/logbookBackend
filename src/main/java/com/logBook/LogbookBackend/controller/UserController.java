@@ -2,8 +2,10 @@ package com.logBook.LogbookBackend.controller;
 
 import com.logBook.LogbookBackend.BusinessLogic.UserService;
 import com.logBook.LogbookBackend.model.Log;
+import com.logBook.LogbookBackend.model.LogUpdateBody;
 import com.logBook.LogbookBackend.model.LogUser;
 import com.logBook.LogbookBackend.model.LoginDetails;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,4 +65,13 @@ public class UserController {
   public Optional<List<Log>> addLog(@NotNull @RequestBody Log log) {
     return userService.addLog(log);
   }
+
+  @PutMapping("/updateInfo")
+  public ResponseEntity<HttpStatus> updateUserInformation (@RequestBody @NotNull LogUpdateBody logUpdateBody) throws Exception{
+    if (!userService.updateUserInformation(logUpdateBody)) {
+      throw new ResponseStatusException(HttpStatusCode.valueOf(400));
+    }
+    throw new ResponseStatusException(HttpStatusCode.valueOf(201));
+  }
+
 }
