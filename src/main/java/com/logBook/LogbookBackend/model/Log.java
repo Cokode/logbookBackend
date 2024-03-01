@@ -2,11 +2,13 @@ package com.logBook.LogbookBackend.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 public class Log implements LogInterface {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Long id;
   private double amount;
   private LogType logType;
   private String date;
@@ -16,12 +18,11 @@ public class Log implements LogInterface {
   @JoinColumn(name = "user_id")
   private LogUser logUser;
 
-  public Log(double amount, LogType logType, String date, String time, LogUser logUser) {
+  public Log(double amount, LogType logType, String date, String time) {
     this.amount = amount;
     this.logType = logType;
     this.date = date;
     this.time = time;
-    this.logUser = logUser;
   }
 
   public Log() {
@@ -44,11 +45,11 @@ public class Log implements LogInterface {
     return time;
   }
 
-  public LogUser getUser() {
+  public LogUser getLogUser() {
     return logUser;
   }
 
-  public void setUser(LogUser logUser) {
+  public void setLogUser(LogUser logUser) {
     this.logUser = logUser;
   }
 

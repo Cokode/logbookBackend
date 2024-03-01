@@ -1,4 +1,4 @@
 package com.logBook.LogbookBackend.model;
 
-public record LogUpdateBody(String UserName, String data) {
+public record LogUpdateBody(String userName, String data, String type) {
 }
