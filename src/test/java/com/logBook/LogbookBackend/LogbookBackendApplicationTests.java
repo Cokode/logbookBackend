@@ -10,4 +10,8 @@ class LogbookBackendApplicationTests {
 	void contextLoads() {
 	}
 
+	void savesObject () {
+
+	}
+
 }
