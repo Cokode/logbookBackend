@@ -2,7 +2,7 @@ package com.logBook.LogbookBackend.BusinessLogic;
 
 import com.logBook.LogbookBackend.model.*;
 import com.logBook.LogbookBackend.respository.UserRepository;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -122,63 +122,46 @@ public class UserService {
     return Optional.of(userRepository.findUserByEmail("fuckyou@yahoo.com").getLog());
   }
 
-  public boolean updateUserInformation(LogUpdateBody logUpdateBody, String type) {
-    assert logUpdateBody != null && !type.isEmpty();
+  public boolean updateUserInformation(LogUpdateBody logUpdateBody) {
+    assert logUpdateBody != null && !logUpdateBody.type().isEmpty();
 
-    String value = logUpdateBody.data();
-    String userName = logUpdateBody.UserName();
-
-    return switch (type) {
-      case "email" -> executeUpdate(1, value, userName);
-
-      case "username" -> executeUpdate(2,value, userName);
-
-      case "firstName" -> executeUpdate(3, value, userName);
-
-      case "middleName" -> executeUpdate(4,value, userName);
-
-      case "lastName" -> executeUpdate(5, value, userName);
-
-      case "password" -> executeUpdate(6,value, userName);
-
-      case "phoneNumber" -> executeUpdate(7,value, userName);
-
-      case "dateOfBirth" -> executeUpdate(8, value, userName);
-    };
-  }
-
-  public boolean executeUpdate(int index, String value, String userName) {
-
-    if(userRepository.findUserByUserName(userName) == null) {
+    if(verifyUserName(logUpdateBody.userName())) {
       return false;
     }
 
-    switch (index) {
-      case 1 -> {
-        userRepository.findUserByUserName(userName).setEmail(value);
-      }
-      case 2 -> {
-        userRepository.findUserByUserName(userName).setUserName(value);
-      }
-      case 3 -> {
-        userRepository.findUserByUserName(userName).setFirstName(value);
+    String value = logUpdateBody.data();
+    String userName = logUpdateBody.userName();
+    String type = logUpdateBody.type();
+
+    LogUser logUser = userRepository.findUserByUserName(userName);
+
+      switch (type) {
+      case "email" -> logUser.setEmail(value);
+
+      case "username" -> logUser.setUserName(value);
+
+      case "firstName" ->  logUser.setFirstName(value);
+
+      case "middleName" -> logUser.setMiddleName(value);
+
+      case "lastName" -> logUser.setLastName(value);
+
+      case "password" -> logUser.setPassword(value);
+
+      case "phoneNumber" -> logUser.setPhoneNumber(value);
+
+      case "dateOfBirth" -> logUser.setDateOfBirth(value);
+
+        default -> {
+          return false;
+        }
       }
 
-      case 4 -> {
-        userRepository.findUserByUserName(userName).setMiddleName(value);
-      }
-      case 5 -> {
-        userRepository.findUserByUserName(userName).setLastName(value);
-      }
-      case 6 -> {
-        userRepository.findUserByUserName(userName).setPassword(value);
-      }
-      case 7 -> {
-        userRepository.findUserByUserName(userName).setPhoneNumber(value);
-      }
-      case 8 -> {
-        userRepository.findUserByUserName(userName).setDateOfBirth(value);
-      }
+    try {
+      userRepository.save(logUser);
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
     return false;
