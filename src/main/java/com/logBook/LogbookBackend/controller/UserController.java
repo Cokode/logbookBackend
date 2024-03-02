@@ -61,8 +61,8 @@ public class UserController {
     return userService.getAll();
   }
 
-  @PostMapping("/gg")
-  public Optional<List<Log>> addLog(@NotNull @RequestBody Log log) {
+  @PostMapping("/addLog")
+  public LogUser addLog(@NotNull @RequestBody Log log) {
     return userService.addLog(log);
   }
 
