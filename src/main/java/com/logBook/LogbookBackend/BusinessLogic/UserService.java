@@ -1,12 +1,14 @@
 package com.logBook.LogbookBackend.BusinessLogic;
 
 import com.logBook.LogbookBackend.model.*;
+import com.logBook.LogbookBackend.respository.LogRepository;
 import com.logBook.LogbookBackend.respository.UserRepository;
-import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +16,12 @@ import java.util.Optional;
 @Service
 public class UserService {
   private final UserRepository userRepository;
+  private final LogRepository logRepository;
 
   @Autowired
-  public UserService(UserRepository userRepository) {
+  public UserService(UserRepository userRepository, LogRepository logRepository) {
     this.userRepository = userRepository;
+    this.logRepository = logRepository;
   }
 
   public LogUser createUser (@NotNull LogUser newLogUser) throws Exception {
@@ -115,11 +119,22 @@ public class UserService {
     return userRepository.findAll();
   }
 
-  public Optional<List<Log>> addLog(Log log) {
-    userRepository.findUserByEmail("fuckyou@yahoo.com").addToLogs(log);
-    List<Log> logs = (userRepository.findUserByEmail("fuckyou@yahoo.com").getLog());
-    System.out.println(logs.size());
-    return Optional.of(userRepository.findUserByEmail("fuckyou@yahoo.com").getLog());
+  public LogUser addLog(Log log) {
+    LogUser logUser = userRepository.findUserByEmail("rolandi@gmail.com");
+    List<Log> logs = logUser.getLog();
+    logUser.setLogs(null);
+    log.setLogUser(logUser);
+
+    if (logs == null) {
+      logs = new ArrayList<>();
+    }
+
+    logs.add(log);
+    logUser.setLogs(logs);
+
+    userRepository.save(logUser);
+    System.out.println(userRepository.findUserByEmail("rolandi@gmail.com").getLog().size());
+    return userRepository.findUserByEmail("rolandi@gmail.com");
   }
 
   public boolean updateUserInformation(LogUpdateBody logUpdateBody) {
