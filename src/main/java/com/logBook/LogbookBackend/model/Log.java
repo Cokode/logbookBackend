@@ -1,21 +1,22 @@
 package com.logBook.LogbookBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.Objects;
 
 @Entity
 public class Log implements LogInterface {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private long id;
   private double amount;
   private LogType logType;
   private String date;
   private String time;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
+  @ManyToOne (fetch = FetchType.LAZY)
+  @JoinColumn(name = "logUser_id")
+  @JsonIgnore
   private LogUser logUser;
 
   public Log(double amount, LogType logType, String date, String time) {
