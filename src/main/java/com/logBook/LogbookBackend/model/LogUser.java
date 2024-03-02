@@ -32,7 +32,9 @@ public class LogUser {
   @NotNull
   private String dateOfBirth;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "logUser", fetch = FetchType.EAGER)
+  @OneToMany(cascade = CascadeType.ALL,
+          mappedBy = "logUser",
+          fetch = FetchType.LAZY)
   private List<Log> logs;
 
   public LogUser() {
@@ -132,6 +134,10 @@ public class LogUser {
 
   public List<Log> getLog() {
     return logs;
+  }
+
+  public void setLogs(List<Log> logs) {
+    this.logs = logs;
   }
 
   public void addToLogs(Log log) {
