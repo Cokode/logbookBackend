@@ -2,10 +2,14 @@ package com.logBook.LogbookBackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
-public class Log implements LogInterface {
+@Setter
+@Getter
+public class Log {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
@@ -29,40 +33,4 @@ public class Log implements LogInterface {
   public Log() {
     // default constructor
   }
-
-  public double getAmount() {
-    return amount;
-  }
-
-  public LogType getLogType() {
-    return logType;
-  }
-
-  public String getDate() {
-    return date;
-  }
-
-  public String getTime() {
-    return time;
-  }
-
-  public LogUser getLogUser() {
-    return logUser;
-  }
-
-  public void setLogUser(LogUser logUser) {
-    this.logUser = logUser;
-  }
-
-  // implementation of interfaces starts here.
-  @Override
-  public boolean validateLog(Log log) {
-    return false;
-  }
-
-  @Override
-  public boolean logHasValue(Log log) {
-    return false;
-  }
-
 }
