@@ -5,7 +5,6 @@ import com.logBook.LogbookBackend.model.Log;
 import com.logBook.LogbookBackend.model.LogUpdateBody;
 import com.logBook.LogbookBackend.model.LogUser;
 import com.logBook.LogbookBackend.model.LoginDetails;
-import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ public class UserController {
   }
 
   @PostMapping("/createUser")
-  public LogUser createUser(@RequestBody LogUser logUser) throws Exception {
+  public LogUser createUser(@RequestBody LogUser logUser) {
     if (userService.createUser(logUser) == null) {
       throw new ResponseStatusException(HttpStatusCode.valueOf(400));
     }
@@ -56,7 +55,7 @@ public class UserController {
     return Optional.ofNullable(userService.getUser(loginInfo));
   }
 
-  @GetMapping("/getall")
+  @GetMapping("/getAll")
   public List<LogUser> allOf() {
     return userService.getAll();
   }
