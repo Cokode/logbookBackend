@@ -1,30 +1,26 @@
 package com.logBook.LogbookBackend.BusinessLogic;
 
 import com.logBook.LogbookBackend.model.*;
-import com.logBook.LogbookBackend.respository.LogRepository;
 import com.logBook.LogbookBackend.respository.UserRepository;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
 public class UserService {
   private final UserRepository userRepository;
-  private final LogRepository logRepository;
 
   @Autowired
-  public UserService(UserRepository userRepository, LogRepository logRepository) {
+  public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
-    this.logRepository = logRepository;
+
   }
 
-  public LogUser createUser (@NotNull LogUser newLogUser) throws Exception {
+  public LogUser createUser (@NotNull LogUser newLogUser) {
    if (verifyUserDoesNotExist(newLogUser)) return null;
    LogUser logUser = collectPayLoadInformation(newLogUser);
 
@@ -65,7 +61,7 @@ public class UserService {
     return logUser;
   }
 
-  public boolean verifyPayLoadInformation(LogUser newLogUser) throws Exception{
+  public boolean verifyPayLoadInformation(LogUser newLogUser) throws NullPointerException{
     return newLogUser.getUserName() != null &&
             newLogUser.getFirstName() != null &&
             newLogUser.getLastName() != null &&
