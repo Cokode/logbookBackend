@@ -3,14 +3,17 @@ package com.logBook.LogbookBackend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
 @Table
+@Setter
+@Getter
 public class LogUser {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,81 +63,81 @@ public class LogUser {
     this.logs = new ArrayList<>(1000);
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getUserName() {
-    return userName;
-  }
-
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
-
-  public String getFirstName() {
-    return FirstName;
-  }
-
-  public void setFirstName(String firstName) {
-    FirstName = firstName;
-  }
-
-  public String getMiddleName() {
-    return MiddleName;
-  }
-
-  public void setMiddleName(String middleName) {
-    MiddleName = middleName;
-  }
-
-  public String getLastName() {
-    return LastName;
-  }
-
-  public void setLastName(String lastName) {
-    LastName = lastName;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPhoneNumber() {
-    return phoneNumber;
-  }
-
-  public void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getDateOfBirth() {
-    return dateOfBirth;
-  }
-
-  public void setDateOfBirth(String dateOfBirth) {
-    this.dateOfBirth = dateOfBirth;
-  }
-
-  public List<Log> getLog() {
-    return logs;
-  }
+//  public Long getId() {
+//    return id;
+//  }
+//
+//  public void setId(Long id) {
+//    this.id = id;
+//  }
+//
+//  public String getUserName() {
+//    return userName;
+//  }
+//
+//  public void setUserName(String userName) {
+//    this.userName = userName;
+//  }
+//
+//  public String getFirstName() {
+//    return FirstName;
+//  }
+//
+//  public void setFirstName(String firstName) {
+//    FirstName = firstName;
+//  }
+//
+//  public String getMiddleName() {
+//    return MiddleName;
+//  }
+//
+//  public void setMiddleName(String middleName) {
+//    MiddleName = middleName;
+//  }
+//
+//  public String getLastName() {
+//    return LastName;
+//  }
+//
+//  public void setLastName(String lastName) {
+//    LastName = lastName;
+//  }
+//
+//  public String getEmail() {
+//    return email;
+//  }
+//
+//  public void setEmail(String email) {
+//    this.email = email;
+//  }
+//
+//  public String getPhoneNumber() {
+//    return phoneNumber;
+//  }
+//
+//  public void setPhoneNumber(String phoneNumber) {
+//    this.phoneNumber = phoneNumber;
+//  }
+//
+//  public String getPassword() {
+//    return password;
+//  }
+//
+//  public void setPassword(String password) {
+//    this.password = password;
+//  }
+//
+//  public String getDateOfBirth() {
+//    return dateOfBirth;
+//  }
+//
+//  public void setDateOfBirth(String dateOfBirth) {
+//    this.dateOfBirth = dateOfBirth;
+//  }
+//
+//  public List<Log> getLog() {
+//    return logs;
+//  }
 
   public void setLogs(List<Log> logs) {
     this.logs = logs;
