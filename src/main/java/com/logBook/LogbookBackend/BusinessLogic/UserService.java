@@ -116,8 +116,8 @@ public class UserService {
   }
 
   public LogUser addLog(Log log) {
-    LogUser logUser = userRepository.findUserByEmail("rolandi@gmail.com");
-    List<Log> logs = logUser.getLog();
+    LogUser logUser = userRepository.findUserByEmail("fuckyou@yahoo.com");
+    List<Log> logs = logUser.getLogs();
     logUser.setLogs(null);
     log.setLogUser(logUser);
 
@@ -129,8 +129,8 @@ public class UserService {
     logUser.setLogs(logs);
 
     userRepository.save(logUser);
-    System.out.println(userRepository.findUserByEmail("rolandi@gmail.com").getLog().size());
-    return userRepository.findUserByEmail("rolandi@gmail.com");
+    System.out.println(userRepository.findUserByEmail("fuckyou@yahoo.com").getLogs().size());
+    return userRepository.findUserByEmail("fuckyou@yahoo.com");
   }
 
   public boolean updateUserInformation(LogUpdateBody logUpdateBody) {
