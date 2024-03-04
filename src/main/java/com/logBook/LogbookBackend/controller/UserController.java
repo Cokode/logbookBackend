@@ -60,8 +60,8 @@ public class UserController {
   }
 
   @PostMapping("/addLog")
-  public LogUser addLog(@NotNull @RequestBody Log log) {
-    return userService.addLog(log);
+  public LogUser addLog(@NotNull @RequestBody Log log, @RequestParam String email) {
+    return userService.addLog(log, email);
   }
 
   @PutMapping("/updateInfo")
