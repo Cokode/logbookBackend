@@ -56,8 +56,6 @@ public class UserService {
     logUser.setPassword(newLogUser.getPassword());
     logUser.setDateOfBirth(newLogUser.getDateOfBirth());
 
-    System.out.println(logUser + " logUser after collecting information.");
-
     return logUser;
   }
 
@@ -116,6 +114,7 @@ public class UserService {
   }
 
   public LogUser addLog(Log log, String email) {
+    System.out.println(email + " this is the email");
     LogUser logUser = userRepository.findUserByEmail(email);
     List<Log> logs = logUser.getLogs();
     logUser.setLogs(null);
@@ -133,43 +132,28 @@ public class UserService {
     return userRepository.findUserByEmail(email);
   }
 
-  public boolean updateUserInformation(LogUpdateBody logUpdateBody) {
-    assert logUpdateBody != null && !logUpdateBody.type().isEmpty();
+  public boolean updateUserInformation(LogUser logUser) {
+    assert logUser != null && !logUser.getEmail().isEmpty();
 
-    if(verifyUserName(logUpdateBody.userName())) {
+    if(verifyUserName(logUser.getUserName())) {
       return false;
     }
 
-    String value = logUpdateBody.data();
-    String userName = logUpdateBody.userName();
-    String type = logUpdateBody.type();
+    String userName = logUser.getUserName();
 
-    LogUser logUser = userRepository.findUserByUserName(userName);
+    LogUser getLogUser = userRepository.findUserByUserName(userName);
 
-      switch (type) {
-      case "email" -> logUser.setEmail(value);
-
-      case "username" -> logUser.setUserName(value);
-
-      case "firstName" ->  logUser.setFirstName(value);
-
-      case "middleName" -> logUser.setMiddleName(value);
-
-      case "lastName" -> logUser.setLastName(value);
-
-      case "password" -> logUser.setPassword(value);
-
-      case "phoneNumber" -> logUser.setPhoneNumber(value);
-
-      case "dateOfBirth" -> logUser.setDateOfBirth(value);
-
-        default -> {
-          return false;
-        }
-      }
+    getLogUser.setEmail(logUser.getEmail());
+    getLogUser.setUserName(logUser.getUserName());
+    getLogUser.setFirstName(logUser.getFirstName());
+    getLogUser.setMiddleName(logUser.getMiddleName());
+    getLogUser.setLastName(logUser.getLastName());
+    getLogUser.setPassword(logUser.getPassword());
+    getLogUser.setPhoneNumber(logUser.getPhoneNumber());
+    getLogUser.setDateOfBirth(logUser.getDateOfBirth());
 
     try {
-      userRepository.save(logUser);
+      userRepository.save(getLogUser);
       return true;
     } catch (Exception e) {
       e.printStackTrace();
