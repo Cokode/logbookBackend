@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @Service
 public class LogService {
   private final LogRepository logRepository;
@@ -22,6 +24,18 @@ public class LogService {
   public void addLogToUser (@NotNull @RequestBody Log newLog) {
 //    LogUser logUser = logRepository.findLogByUser(userUsername);
 
+  }
+
+  public List<Log> getLogs(String email, String password) {
+    return logRepository.findLogByLogUserEmailAndLogUserPassword(email, password);
+  }
+
+  public List<Log> getLogs(long id) {
+    return logRepository.findLogByLogUserId(id);
+  }
+
+  public List<Log> getAllof() {
+    return logRepository.findAll();
   }
 
 //  @PostConstruct
