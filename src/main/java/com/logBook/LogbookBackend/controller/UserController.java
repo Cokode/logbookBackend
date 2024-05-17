@@ -65,11 +65,8 @@ public class UserController {
   }
 
   @PutMapping("/updateInfo")
-  public ResponseEntity<HttpStatus> updateUserInformation (@RequestBody @NotNull LogUser logUser) throws Exception{
-    if (!userService.updateUserInformation(logUser)) {
-      throw new ResponseStatusException(HttpStatusCode.valueOf(400));
-    }
-    throw new ResponseStatusException(HttpStatusCode.valueOf(201));
+  public LogUser updateUserInformation (@RequestBody @NotNull LogUser logUser) {
+    return userService.updateUserInformation(logUser);
   }
 
 }

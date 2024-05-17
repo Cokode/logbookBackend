@@ -132,11 +132,11 @@ public class UserService {
     return userRepository.findUserByEmail(email);
   }
 
-  public boolean updateUserInformation(LogUser logUser) {
+  public LogUser updateUserInformation(LogUser logUser) {
     assert logUser != null && !logUser.getEmail().isEmpty();
 
     if(verifyUserName(logUser.getUserName())) {
-      return false;
+      return null;
     }
 
     String userName = logUser.getUserName();
@@ -154,12 +154,12 @@ public class UserService {
 
     try {
       userRepository.save(getLogUser);
-      return true;
+      return getLogUser;
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    return false;
+    return null;
   }
 
 //  @PostConstruct
