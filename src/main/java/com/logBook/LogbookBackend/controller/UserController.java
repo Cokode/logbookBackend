@@ -54,6 +54,10 @@ public class UserController {
     return Optional.ofNullable(userService.getUser(loginInfo));
   }
 
+  /***
+   * only for testing purpose. returns all Users Todo remove this API
+   * @return returns all users.
+   */
   @GetMapping("/getAll")
   public List<LogUser> allOf() {
     return userService.getAll();
